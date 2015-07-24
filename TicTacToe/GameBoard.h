@@ -21,6 +21,17 @@ typedef NS_ENUM(NSInteger, BoardOccupant) {
 - (BoardOccupant)occupantAtPositionRow:(NSInteger)row col:(NSInteger)column;
 - (void)occupyPositionRow:(NSInteger)row column:(NSInteger)column withOccupant:(BoardOccupant)occupant;
 
+- (NSArray *)iterations;
+
 @property (nonatomic, assign) NSInteger size;
+
+@end
+
+@interface GameBoardPosition : NSObject
+
+- (id)initWithRow:(NSInteger)row andColumn:(NSInteger)column;
+
+@property (nonatomic, assign) NSInteger row;
+@property (nonatomic, assign) NSInteger column;
 
 @end

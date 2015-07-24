@@ -95,11 +95,15 @@
     if (!self.state.gameEnded) {
         if ([self.state validMoveFor:PlayerX atRow:row column:column]) {
             [self.state player:PlayerX playsAtRow:row column:column];
-            [self.botPlayer makeAMove];
+            if (!self.state.gameEnded) {
+                [self.botPlayer makeAMove];
+            }
             [self.collectionView reloadData];
         } else {
             NSLog(@"Can't play there");
         }
+    } else {
+        NSLog(@"Game is over");
     }
 }
 

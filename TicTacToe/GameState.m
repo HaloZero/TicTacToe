@@ -8,6 +8,7 @@
 
 #import "GameState.h"
 #import "GameBoard.h"
+#import <BlocksKit.h>
 
 
 
@@ -15,6 +16,7 @@
 
 @property (nonatomic, strong) GameBoard *board;
 @property (nonatomic, assign) BOOL gameEnded;
+@property (nonatomic, assign) Player winner;
 
 @end
 
@@ -48,11 +50,24 @@
 }
 
 - (void)checkGameOver {
-    NSInteger sizeofBoard = self.board.size;
-    for (int row = 0; row < sizeofBoard; row++) {
-        for (int column = 0; column < sizeofBoard; column++) {
-            
+    for (NSArray *iteration in [self.board iterations]) {
+        GameBoardPosition *position = iteration[0];
+        BoardOccupant firstOccupant = [self.board occupantAtPositionRow:position.row col:position.column];
+        self.gameEnded = [iteration bk_all:^BOOL(GameBoardPosition *position) {
+            return [self.board occupantAtPositionRow:position.row col:position.column] == firstOccupant && firstOccupant != Empty;
+        }];
+        if (self.gameEnded) {
+            if (firstOccupant == OccupiedByX) {
+                self.winner = PlayerX;
+            } else {
+                self.winner = PlayerO;
+            }
+            break;
         }
+    }
+
+    if ([self gameTied]) {
+        self.gameEnded = YES;
     }
 }
 
@@ -61,7 +76,7 @@
     for (int row = 0; row < sizeofBoard; row++) {
         for (int column = 0; column < sizeofBoard; column++) {
             if ([self.board occupantAtPositionRow:row col:column] == Empty) {
-                return false;
+                return NO;
             }
         }
     }

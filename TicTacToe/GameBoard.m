@@ -42,5 +42,62 @@
     return [NSString stringWithFormat:@"Board is %@", self.rows];
 }
 
+- (NSArray *)iterations {
+    NSMutableArray *iterations = [NSMutableArray array];
+    // check all horizontal
+    for (int row = 0; row < self.size; row++) {
+        NSMutableArray *iteration = [NSMutableArray array];
+        for (int column = 0; column < self.size; column++) {
+            [iteration addObject:[[GameBoardPosition alloc] initWithRow:row andColumn:column]];
+        }
+
+        [iterations addObject:[iteration copy]];
+    }
+
+    // check all verical lines
+    for (int column = 0; column < self.size; column++) {
+        NSMutableArray *iteration = [NSMutableArray array];
+        for (int row = 0; row < self.size; row++) {
+            [iteration addObject:[[GameBoardPosition alloc] initWithRow:row andColumn:column]];
+        }
+
+        [iterations addObject:[iteration copy]];
+    }
+
+    // diagonal
+    NSMutableArray *iteration = [NSMutableArray array];
+    for (int row = 0; row < self.size; row++) {
+        [iteration addObject:[[GameBoardPosition alloc] initWithRow:row andColumn:row]];
+    }
+    [iterations addObject:[iteration copy]];
+
+    iteration = [NSMutableArray array];
+    for (int row = 0; row < self.size; row++) {
+        NSInteger column = self.size-row-1;
+        [iteration addObject:[[GameBoardPosition alloc] initWithRow:row andColumn:column]];
+    }
+    [iterations addObject:[iteration copy]];
+
+    return [iterations copy];
+}
+
+
+@end
+
+@implementation GameBoardPosition
+
+- (id)initWithRow:(NSInteger)row andColumn:(NSInteger)column {
+    self = [super init];
+    if (self) {
+        _row = row;
+        _column = column;
+    }
+
+    return self;
+}
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"Row: %ld, Col: %ld", self.row, self.column];
+}
 
 @end
