@@ -36,11 +36,11 @@
 
 - (void)occupyPositionRow:(NSInteger)row column:(NSInteger)column withOccupant:(BoardOccupant)occupant {
     self.rows[row][column] = @(occupant);
-    NSLog(@"Board is now %@", self.rows);
 }
 
 - (NSString *)description {
     return [NSString stringWithFormat:@"Board is %@", self.rows];
 }
+
 
 @end

@@ -14,7 +14,6 @@
 @interface GameState()
 
 @property (nonatomic, strong) GameBoard *board;
-@property (nonatomic, assign) Player currentPlayer;
 @property (nonatomic, assign) BOOL gameEnded;
 
 @end
@@ -31,7 +30,7 @@
 
 - (BOOL)validMoveFor:(Player)player atRow:(NSInteger)row column:(NSInteger)column {
     BoardOccupant occupant = [self.board occupantAtPositionRow:row col:column];
-    if (occupant == Empty && self.currentPlayer == player) {
+    if (occupant == Empty) {
         return YES;
     } else {
         return NO;
@@ -45,6 +44,28 @@
         occupant = OccupiedByX;
     }
     [self.board occupyPositionRow:row column:column withOccupant:occupant];
+    [self checkGameOver];
+}
+
+- (void)checkGameOver {
+    NSInteger sizeofBoard = self.board.size;
+    for (int row = 0; row < sizeofBoard; row++) {
+        for (int column = 0; column < sizeofBoard; column++) {
+            
+        }
+    }
+}
+
+- (BOOL)gameTied {
+    NSInteger sizeofBoard = self.board.size;
+    for (int row = 0; row < sizeofBoard; row++) {
+        for (int column = 0; column < sizeofBoard; column++) {
+            if ([self.board occupantAtPositionRow:row col:column] == Empty) {
+                return false;
+            }
+        }
+    }
+    return YES;
 }
 
 @end

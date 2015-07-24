@@ -16,6 +16,7 @@
 		DA36F3841B61989E000E5ABA /* TicTacToeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA36F3831B61989E000E5ABA /* TicTacToeTests.m */; };
 		DA36F38F1B6198BC000E5ABA /* GameBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = DA36F38E1B6198BC000E5ABA /* GameBoard.m */; };
 		DA36F3921B61ABE3000E5ABA /* GameState.m in Sources */ = {isa = PBXBuildFile; fileRef = DA36F3911B61ABE3000E5ABA /* GameState.m */; };
+		DA64313D1B61EA9F00F93A9E /* GameAIBasic.m in Sources */ = {isa = PBXBuildFile; fileRef = DA64313C1B61EA9F00F93A9E /* GameAIBasic.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,8 @@
 		DA36F38E1B6198BC000E5ABA /* GameBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameBoard.m; sourceTree = "<group>"; };
 		DA36F3901B61ABE3000E5ABA /* GameState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameState.h; sourceTree = "<group>"; };
 		DA36F3911B61ABE3000E5ABA /* GameState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameState.m; sourceTree = "<group>"; };
+		DA64313B1B61EA9F00F93A9E /* GameAIBasic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameAIBasic.h; path = TicTacToe/GameAIBasic.h; sourceTree = "<group>"; };
+		DA64313C1B61EA9F00F93A9E /* GameAIBasic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameAIBasic.m; path = TicTacToe/GameAIBasic.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +72,8 @@
 		DA36F35B1B61989E000E5ABA = {
 			isa = PBXGroup;
 			children = (
+				DA64313B1B61EA9F00F93A9E /* GameAIBasic.h */,
+				DA64313C1B61EA9F00F93A9E /* GameAIBasic.m */,
 				DA36F3661B61989E000E5ABA /* TicTacToe */,
 				DA36F3801B61989E000E5ABA /* TicTacToeTests */,
 				DA36F3651B61989E000E5ABA /* Products */,
@@ -233,6 +238,7 @@
 				DA36F3701B61989E000E5ABA /* ViewController.m in Sources */,
 				DA36F36D1B61989E000E5ABA /* AppDelegate.m in Sources */,
 				DA36F36A1B61989E000E5ABA /* main.m in Sources */,
+				DA64313D1B61EA9F00F93A9E /* GameAIBasic.m in Sources */,
 				DA36F3921B61ABE3000E5ABA /* GameState.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

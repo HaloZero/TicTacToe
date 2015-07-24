@@ -8,10 +8,12 @@
 
 #import "ViewController.h"
 #import "GameState.h"
+#import "GameAIBasic.h"
 
 @interface ViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (nonatomic, strong) GameState *state;
+@property (nonatomic, strong) GameAIBasic *botPlayer;
 
 @end
 
@@ -21,6 +23,7 @@
     [super viewDidLoad];
 
     self.state = [GameState new];
+    self.botPlayer = [[GameAIBasic alloc] initWithGameState:self.state playingAs:PlayerO];
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
@@ -89,16 +92,15 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger row = indexPath.row;
     NSInteger column = indexPath.section;
-    NSLog(@"PLaying at row %@ col %@", @(row), @(column));
     if (!self.state.gameEnded) {
         if ([self.state validMoveFor:PlayerX atRow:row column:column]) {
             [self.state player:PlayerX playsAtRow:row column:column];
-//            [self.collectionView reloadData];
+            [self.botPlayer makeAMove];
+            [self.collectionView reloadData];
         } else {
             NSLog(@"Can't play there");
         }
     }
-    [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
 }
 
 
