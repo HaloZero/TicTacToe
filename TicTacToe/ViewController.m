@@ -46,6 +46,13 @@
 //    [self.state player:PlayerX playsAtRow:1 column:2];
 //    [self.state player:PlayerO playsAtRow:0 column:1];
     // Do any additional setup after loading the view, typically from a nib.
+    [self.createNewGameButton addTarget:self action:@selector(startNewGame) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)startNewGame {
+    self.state = [GameState new];
+    self.botPlayer = [[GameAIBasic alloc] initWithGameState:self.state playingAs:PlayerO];
+    [self.collectionView reloadData];
 }
 
 #pragma mark - UICollectionView Delegate
