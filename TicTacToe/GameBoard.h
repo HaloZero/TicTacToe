@@ -8,17 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
-//TODO: Rename?
+// This could be named better, :(
 typedef NS_ENUM(NSInteger, BoardOccupant) {
     Empty,
-    OccupiedByX,
-    OccupiedByO
+    OccupiedByPlayerX,
+    OccupiedByPlayerO
 };
 
 @interface GameBoard : NSObject
 
+
 - (id)initWithSize:(NSInteger)size;
+
+
 - (BoardOccupant)occupantAtPositionRow:(NSInteger)row col:(NSInteger)column;
+
 - (void)occupyPositionRow:(NSInteger)row column:(NSInteger)column withOccupant:(BoardOccupant)occupant;
 
 - (NSArray *)iterations;
@@ -29,7 +33,7 @@ typedef NS_ENUM(NSInteger, BoardOccupant) {
 
 @end
 
-@interface GameBoardPosition : NSObject
+@interface GameMove : NSObject
 
 - (id)initWithRow:(NSInteger)row andColumn:(NSInteger)column;
 

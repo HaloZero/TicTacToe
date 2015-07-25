@@ -43,9 +43,9 @@
 
 - (void)player:(Player)player playsAtRow:(NSInteger)row column:(NSInteger)column {
     NSAssert([self validMoveFor:player atRow:row column:column], @"Don't call move player without validation");
-    BoardOccupant occupant = OccupiedByO;
+    BoardOccupant occupant = OccupiedByPlayerO;
     if (player == PlayerX) {
-        occupant = OccupiedByX;
+        occupant = OccupiedByPlayerX;
     }
     [self.board occupyPositionRow:row column:column withOccupant:occupant];
 
@@ -55,13 +55,13 @@
 
 - (void)checkGameOver {
     for (NSArray *iteration in [self.board iterations]) {
-        GameBoardPosition *position = iteration[0];
+        GameMove *position = iteration[0];
         BoardOccupant firstOccupant = [self.board occupantAtPositionRow:position.row col:position.column];
-        self.gameEnded = [iteration bk_all:^BOOL(GameBoardPosition *position) {
+        self.gameEnded = [iteration bk_all:^BOOL(GameMove *position) {
             return [self.board occupantAtPositionRow:position.row col:position.column] == firstOccupant && firstOccupant != Empty;
         }];
         if (self.gameEnded) {
-            if (firstOccupant == OccupiedByX) {
+            if (firstOccupant == OccupiedByPlayerX) {
                 self.winner = PlayerX;
             } else {
                 self.winner = PlayerO;

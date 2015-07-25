@@ -55,7 +55,7 @@
     for (int row = 0; row < self.size; row++) {
         NSMutableArray *iteration = [NSMutableArray array];
         for (int column = 0; column < self.size; column++) {
-            [iteration addObject:[[GameBoardPosition alloc] initWithRow:row andColumn:column]];
+            [iteration addObject:[[GameMove alloc] initWithRow:row andColumn:column]];
         }
 
         [iterations addObject:[iteration copy]];
@@ -65,7 +65,7 @@
     for (int column = 0; column < self.size; column++) {
         NSMutableArray *iteration = [NSMutableArray array];
         for (int row = 0; row < self.size; row++) {
-            [iteration addObject:[[GameBoardPosition alloc] initWithRow:row andColumn:column]];
+            [iteration addObject:[[GameMove alloc] initWithRow:row andColumn:column]];
         }
 
         [iterations addObject:[iteration copy]];
@@ -74,14 +74,14 @@
     // diagonal
     NSMutableArray *iteration = [NSMutableArray array];
     for (int row = 0; row < self.size; row++) {
-        [iteration addObject:[[GameBoardPosition alloc] initWithRow:row andColumn:row]];
+        [iteration addObject:[[GameMove alloc] initWithRow:row andColumn:row]];
     }
     [iterations addObject:[iteration copy]];
 
     iteration = [NSMutableArray array];
     for (int row = 0; row < self.size; row++) {
         NSInteger column = self.size-row-1;
-        [iteration addObject:[[GameBoardPosition alloc] initWithRow:row andColumn:column]];
+        [iteration addObject:[[GameMove alloc] initWithRow:row andColumn:column]];
     }
     [iterations addObject:[iteration copy]];
 
@@ -93,7 +93,7 @@
     for (int row = 0; row < self.size; row++) {
         for (int column = 0; column < self.size; column++) {
             if ([self occupantAtPositionRow:row col:column] == Empty) {
-                [moves addObject:[[GameBoardPosition alloc] initWithRow:row andColumn:column]];
+                [moves addObject:[[GameMove alloc] initWithRow:row andColumn:column]];
             }
         }
     }
@@ -102,14 +102,13 @@
 
 - (id)copyWithZone:(NSZone *)zone {
     GameBoard *board = [[GameBoard allocWithZone:zone] initWithSize:self.size];
-//    TODO: DO I need this?
-    board.rows = [[NSMutableArray alloc] initWithArray:self.rows copyItems:YES];
+    board.rows = [[NSMutableArray alloc] initWithArray:self.rows copyItems:NO];
     return board;
 }
 
 @end
 
-@implementation GameBoardPosition
+@implementation GameMove
 
 - (id)initWithRow:(NSInteger)row andColumn:(NSInteger)column {
     self = [super init];

@@ -15,7 +15,7 @@
 @property (nonatomic, assign) Player me;
 @property (nonatomic, assign) Player myOpponent;
 
-@property (nonatomic, strong) GameBoardPosition *choice;
+@property (nonatomic, strong) GameMove *choice;
 
 @end
 
@@ -48,7 +48,7 @@
     NSMutableArray *scores = [NSMutableArray array];
     NSMutableArray *moves = [NSMutableArray array];
 
-    [[game.board availableMoves] bk_each:^(GameBoardPosition *move) {
+    [[game.board availableMoves] bk_each:^(GameMove *move) {
         GameState *newGame = [game copy];
         [newGame player:newGame.currentPlayer playsAtRow:move.row column:move.column];
         [scores addObject:[self solve:newGame withDepth:depth]];
