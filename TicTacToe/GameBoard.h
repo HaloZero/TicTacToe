@@ -25,11 +25,22 @@ typedef NS_ENUM(NSInteger, BoardOccupant) {
 
 - (void)occupyPositionRow:(NSInteger)row column:(NSInteger)column withOccupant:(BoardOccupant)occupant;
 
+/**
+ *  Return all possible iterations for checking if any player has won or not
+ *
+ *  @return returns arrays of arrays of GameMoves.
+ */
 - (NSArray *)iterations;
 
+/**
+ *  All possible available moves to be played by any player.
+ *
+ *  @return array of GameMoves
+ */
 - (NSArray *)availableMoves;
 
-@property (nonatomic, assign) NSInteger size;
+
+@property (nonatomic, assign, readonly) NSInteger size;
 
 @end
 

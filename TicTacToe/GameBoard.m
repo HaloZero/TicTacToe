@@ -12,6 +12,7 @@
 @interface GameBoard()
 
 @property (nonatomic, strong) NSMutableArray *rows;
+@property (nonatomic, assign) NSInteger size;
 
 @end
 
