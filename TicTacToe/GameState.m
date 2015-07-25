@@ -87,4 +87,12 @@
     return YES;
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+    GameState *game = [[GameState allocWithZone:zone] init];
+    game.board = [self.board copy];
+    game.gameEnded = self.gameEnded;
+    game.winner = self.winner;
+    game.currentPlayer = self.currentPlayer;
+    return game;
+}
 @end

@@ -11,7 +11,7 @@
 
 @interface GameBoard()
 
-@property (nonatomic, strong) NSArray *rows;
+@property (nonatomic, strong) NSMutableArray *rows;
 
 @end
 
@@ -21,25 +21,32 @@
     self = [super init];
     if (self) {
         _size = size;
-        NSMutableArray *rows = [NSMutableArray arrayWithCapacity:size];
-        for (int i = 0; i < 3; i++)  {
-            [rows addObject:[NSMutableArray arrayWithObjects:@(Empty), @(Empty), @(Empty), nil]];
+        NSMutableArray *rows = [NSMutableArray arrayWithCapacity:size * size];
+
+        for (int i = 0; i < size *size; i++)  {
+            [rows addObject:@(Empty)];
         }
-        _rows = [rows copy];
+        _rows = rows;
     }
     return self;
 }
 
+- (NSInteger)positionForRow:(NSInteger)row andColumn:(NSInteger)column {
+    return row * self.size + column;
+}
+
 - (BoardOccupant)occupantAtPositionRow:(NSInteger)row col:(NSInteger)column {
-    return [self.rows[row][column] integerValue];
+    NSInteger index = [self positionForRow:row andColumn:column];
+    return [self.rows[index] integerValue];
 }
 
 - (void)occupyPositionRow:(NSInteger)row column:(NSInteger)column withOccupant:(BoardOccupant)occupant {
-    self.rows[row][column] = @(occupant);
+    NSInteger index = [self positionForRow:row andColumn:column];
+    self.rows[index] = @(occupant);
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"Board is %@", self.rows];
+    return [NSString stringWithFormat:@"%@ Board is %@", [super description], self.rows];
 }
 
 - (NSArray *)iterations {
@@ -93,6 +100,12 @@
     return [moves copy];
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+    GameBoard *board = [[GameBoard allocWithZone:zone] initWithSize:self.size];
+//    TODO: DO I need this?
+    board.rows = [[NSMutableArray alloc] initWithArray:self.rows copyItems:YES];
+    return board;
+}
 
 @end
 

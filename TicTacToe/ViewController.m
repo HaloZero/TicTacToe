@@ -72,7 +72,6 @@
     if (occupant == OccupiedByO) {
         label.text = @"O";
     } else if (occupant == OccupiedByX) {
-        NSLog(@"occupant is row %@ col %@", @(row), @(column));
         label.text = @"X";
     } else {
         label.text = @"";
