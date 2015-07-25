@@ -23,6 +23,8 @@ typedef NS_ENUM(NSInteger, BoardOccupant) {
 
 - (NSArray *)iterations;
 
+- (NSArray *)availableMoves;
+
 @property (nonatomic, assign) NSInteger size;
 
 @end

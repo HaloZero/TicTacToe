@@ -11,12 +11,12 @@
 #import <BlocksKit.h>
 
 
-
 @interface GameState()
 
 @property (nonatomic, strong) GameBoard *board;
 @property (nonatomic, assign) BOOL gameEnded;
 @property (nonatomic, assign) Player winner;
+@property (nonatomic, assign) Player currentPlayer;
 
 @end
 
@@ -26,6 +26,8 @@
     self = [super init];
     if (self) {
         _board = [[GameBoard alloc] initWithSize:3];
+        // TODO: Should I assume we start with X?
+        _currentPlayer = PlayerX;
     }
     return self;
 }
@@ -46,6 +48,8 @@
         occupant = OccupiedByX;
     }
     [self.board occupyPositionRow:row column:column withOccupant:occupant];
+
+    self.currentPlayer = opponent(self.currentPlayer);
     [self checkGameOver];
 }
 

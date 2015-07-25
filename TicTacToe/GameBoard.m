@@ -81,6 +81,18 @@
     return [iterations copy];
 }
 
+- (NSArray *)availableMoves {
+    NSMutableArray *moves = [NSMutableArray array];
+    for (int row = 0; row < self.size; row++) {
+        for (int column = 0; column < self.size; column++) {
+            if ([self occupantAtPositionRow:row col:column] == Empty) {
+                [moves addObject:[[GameBoardPosition alloc] initWithRow:row andColumn:column]];
+            }
+        }
+    }
+    return [moves copy];
+}
+
 
 @end
 
