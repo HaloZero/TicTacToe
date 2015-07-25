@@ -15,7 +15,7 @@
 
 @property (nonatomic, strong) GameBoard *board;
 @property (nonatomic, assign) BOOL gameEnded;
-@property (nonatomic, assign) Player winner;
+@property (nonatomic, assign) GameWinner winner;
 @property (nonatomic, assign) Player currentPlayer;
 
 @end
@@ -62,16 +62,17 @@
         }];
         if (self.gameEnded) {
             if (firstOccupant == OccupiedByPlayerX) {
-                self.winner = PlayerX;
+                self.winner = WonByPlayerX;
             } else {
-                self.winner = PlayerO;
+                self.winner = WonByPlayerO;
             }
             break;
         }
     }
 
-    if ([self gameTied]) {
+    if (!self.gameEnded && [self gameTied]) {
         self.gameEnded = YES;
+        self.winner = TieGame;
     }
 }
 

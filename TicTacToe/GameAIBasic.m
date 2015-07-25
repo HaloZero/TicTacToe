@@ -58,24 +58,25 @@
     if (game.currentPlayer == self.me) {
         NSNumber *maxScore = [scores valueForKeyPath:@"@max.intValue"];
         NSInteger indexOfMaxScore = [scores indexOfObject:maxScore];
-        if (depth == 1) {
-            self.choice = [moves objectAtIndex:indexOfMaxScore];
-        }
+        self.choice = [moves objectAtIndex:indexOfMaxScore];
         return maxScore;
     } else {
         NSNumber *minScore = [scores valueForKeyPath:@"@min.intValue"];
-        NSInteger indexOfMinScore = [scores indexOfObject:minScore];
         return minScore;
     }
 }
 
 - (NSInteger)scoreForGame:(GameState *)state atDepth:(NSInteger)depth {
-    if (state.winner == self.me) {
+    GameWinner myWinningState = WonByPlayerO;
+    if (self.me == PlayerX) {
+        myWinningState = WonByPlayerX;
+    }
+    if (state.winner == myWinningState) {
         return 10 - depth;
-    } else if (state.winner == self.myOpponent) {
-        return depth - 10;
-    } else {
+    } else if (state.winner == TieGame) {
         return 0;
+    } else {
+        return depth - 10;
     }
 }
 

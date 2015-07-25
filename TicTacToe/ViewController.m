@@ -39,6 +39,12 @@
     layout.minimumInteritemSpacing = 0;
     self.collectionView.collectionViewLayout = layout;
 
+//    [self.state player:PlayerX playsAtRow:0 column:0];
+//    [self.state player:PlayerO playsAtRow:1 column:1];
+//    [self.state player:PlayerX playsAtRow:2 column:0];
+//    [self.state player:PlayerO playsAtRow:1 column:0];
+//    [self.state player:PlayerX playsAtRow:1 column:2];
+//    [self.state player:PlayerO playsAtRow:0 column:1];
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -69,9 +75,9 @@
     NSInteger column = indexPath.section;
 
     BoardOccupant occupant = [self.state.board occupantAtPositionRow:row col:column];
-    if (occupant == OccupiedByO) {
+    if (occupant == OccupiedByPlayerO) {
         label.text = @"O";
-    } else if (occupant == OccupiedByX) {
+    } else if (occupant == OccupiedByPlayerX) {
         label.text = @"X";
     } else {
         label.text = @"";

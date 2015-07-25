@@ -14,6 +14,12 @@ typedef NS_ENUM(NSInteger, Player) {
     PlayerO
 };
 
+typedef NS_ENUM(NSInteger, GameWinner) {
+    TieGame,
+    WonByPlayerX,
+    WonByPlayerO
+};
+
 static Player opponent(Player player) {
     if (player == PlayerO) {
         return PlayerX;
@@ -26,7 +32,7 @@ static Player opponent(Player player) {
 
 @property (nonatomic, strong, readonly) GameBoard *board;
 @property (nonatomic, assign, readonly) BOOL gameEnded;
-@property (nonatomic, assign, readonly) Player winner;
+@property (nonatomic, assign, readonly) GameWinner winner;
 @property (nonatomic, assign, readonly) Player currentPlayer;
 
 - (BOOL)validMoveFor:(Player)player atRow:(NSInteger)row column:(NSInteger)column;
