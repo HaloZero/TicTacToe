@@ -80,13 +80,15 @@
     BoardOccupant occupant = [self.state.board occupantAtPositionRow:row col:column];
     if (occupant == OccupiedByPlayerO) {
         label.text = @"O";
+        label.textColor = [UIColor blueColor];
     } else if (occupant == OccupiedByPlayerX) {
         label.text = @"X";
+        label.textColor = [UIColor redColor];
     } else {
         label.text = @"";
     }
 
-    [label setFont:[UIFont systemFontOfSize:50]];
+    [label setFont:[UIFont fontWithName:@"Chalkboard SE" size:90]];
     [label setTextAlignment:NSTextAlignmentCenter];
     [cell.contentView addSubview:label];
     cell.layer.borderWidth = 1.0f;
@@ -103,9 +105,15 @@
     if (!self.state.gameEnded) {
         if ([self.state validMoveFor:PlayerX atRow:row column:column]) {
             [self.state player:PlayerX playsAtRow:row column:column];
-            if (!self.state.gameEnded) {
-                [self.botPlayer makeAMove];
-            }
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                __block GameMove *botMove = [self.botPlayer pickAMove];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (!self.state.gameEnded) {
+                        [self.state player:self.botPlayer.me playsAtRow:botMove.row column:botMove.column];
+                    }
+                    [self.collectionView reloadData];
+                });
+            });
             [self.collectionView reloadData];
         } else {
             NSLog(@"Can't play there");

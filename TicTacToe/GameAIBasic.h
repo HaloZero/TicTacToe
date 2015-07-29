@@ -12,6 +12,8 @@
 @interface GameAIBasic : NSObject
 
 - (id)initWithGameState:(GameState *)game playingAs:(Player)player;
-- (void)makeAMove;
+- (GameMove *)pickAMove;
+
+@property (nonatomic, assign, readonly) Player me;
 
 @end

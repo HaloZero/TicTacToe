@@ -31,13 +31,13 @@
     return self;
 }
 
-- (void)makeAMove {
+- (GameMove *)pickAMove {
     NSAssert(self.game.currentPlayer == self.me, @"I should be allowed to make a move");
 
     GameState *newGame = [self.game copy];
     [self solve:newGame withDepth:0];
 
-    [self.game player:self.me playsAtRow:self.choice.row column:self.choice.column];
+    return self.choice;
 }
 
 - (NSNumber *)solve:(GameState *)game withDepth:(NSInteger)depth {
