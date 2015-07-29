@@ -38,14 +38,10 @@
     layout.minimumLineSpacing = 0;
     layout.minimumInteritemSpacing = 0;
     self.collectionView.collectionViewLayout = layout;
+    CGFloat x = ceil(([UIScreen mainScreen].bounds.size.width - (width * 3)) / 2);
+    CGFloat y = self.collectionView.frame.origin.y;
+    [self.collectionView setFrame:CGRectMake(x, y, width * self.state.board.size, width * self.state.board.size)];
 
-//    [self.state player:PlayerX playsAtRow:0 column:0];
-//    [self.state player:PlayerO playsAtRow:1 column:1];
-//    [self.state player:PlayerX playsAtRow:2 column:0];
-//    [self.state player:PlayerO playsAtRow:1 column:0];
-//    [self.state player:PlayerX playsAtRow:1 column:2];
-//    [self.state player:PlayerO playsAtRow:0 column:1];
-    // Do any additional setup after loading the view, typically from a nib.
     [self.createNewGameButton addTarget:self action:@selector(startNewGame) forControlEvents:UIControlEventTouchUpInside];
 }
 
