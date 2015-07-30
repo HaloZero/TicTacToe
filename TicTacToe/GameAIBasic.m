@@ -70,9 +70,10 @@
     if (self.me == PlayerX) {
         myWinningState = GameResultWinnerX;
     }
+
     if (state.result == myWinningState) {
         return 10 - depth;
-    } else if (state.result == TieGame) {
+    } else if (state.result == GameResultTie) {
         return 0;
     } else {
         return depth - 10;

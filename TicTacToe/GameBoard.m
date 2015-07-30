@@ -33,7 +33,7 @@
 }
 
 - (NSInteger)positionForRow:(NSInteger)row andColumn:(NSInteger)column {
-    return row * self.size + column;
+    return (row * self.size) + column;
 }
 
 - (BoardOccupant)occupantAtPositionRow:(NSInteger)row col:(NSInteger)column {

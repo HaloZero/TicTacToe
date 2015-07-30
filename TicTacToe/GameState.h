@@ -11,7 +11,7 @@
 
 typedef NS_ENUM(NSInteger, Player) { PlayerX, PlayerO };
 
-typedef NS_ENUM(NSInteger, GameResult) { TieGame, GameResultWinnerX, GameResultWinnerO };
+typedef NS_ENUM(NSInteger, GameResult) { GameResultTie, GameResultWinnerX, GameResultWinnerO };
 
 @interface GameState : NSObject
 

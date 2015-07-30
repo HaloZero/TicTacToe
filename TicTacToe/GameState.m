@@ -109,7 +109,7 @@
 
     if (!self.gameEnded && [self gameTied]) {
         self.gameEnded = YES;
-        self.result = TieGame;
+        self.result = GameResultTie;
     }
 }
 

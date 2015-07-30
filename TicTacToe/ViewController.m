@@ -16,6 +16,7 @@
 #import <UIAlertView+BlocksKit.h>
 
 static NSString *kGameCellIdentifier = @"TicTacToeCellIdentifier";
+
 @interface ViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (nonatomic, strong) GameState *game;
@@ -133,25 +134,19 @@ static NSString *kGameCellIdentifier = @"TicTacToeCellIdentifier";
 
 - (void)checkGameOver {
     if (self.game.gameEnded) {
+        NSString *message = @"";
         if (self.game.result == GameResultWinnerX) {
-            [UIAlertView bk_showAlertViewWithTitle:@"Game Over"
-                                           message:@"Player X has Won"
-                                 cancelButtonTitle:@"Got it"
-                                 otherButtonTitles:nil
-                                           handler:nil];
+            message = @"Player X has won";
         } else if (self.game.result == GameResultWinnerO) {
-            [UIAlertView bk_showAlertViewWithTitle:@"Game Over"
-                                           message:@"Player O has Won"
-                                 cancelButtonTitle:@"Got it"
-                                 otherButtonTitles:nil
-                                           handler:nil];
+            message = @"Player O has won";
         } else {
-            [UIAlertView bk_showAlertViewWithTitle:@"Game Over"
-                                           message:@"Tie Game"
-                                 cancelButtonTitle:@"Got it"
-                                 otherButtonTitles:nil
-                                           handler:nil];
+            message = @"Tie Game";
         }
+        [UIAlertView bk_showAlertViewWithTitle:@"Game Over"
+                                       message:message
+                             cancelButtonTitle:@"Got it"
+                             otherButtonTitles:nil
+                                       handler:nil];
     }
 }
 @end
