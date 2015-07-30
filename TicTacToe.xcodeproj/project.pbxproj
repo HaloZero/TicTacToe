@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5EF31FBA0CAEF79E6947E96E /* libPods-TicTacToe.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49E77097E6ED8962094DBB27 /* libPods-TicTacToe.a */; };
 		93EC42371B69725A00902D62 /* robot-thinking.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 93EC42361B69725A00902D62 /* robot-thinking.jpg */; };
+		93EC423A1B6A0D2000902D62 /* TicTacToeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93EC42391B6A0D2000902D62 /* TicTacToeCollectionViewCell.m */; };
 		DA36F36A1B61989E000E5ABA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DA36F3691B61989E000E5ABA /* main.m */; };
 		DA36F36D1B61989E000E5ABA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DA36F36C1B61989E000E5ABA /* AppDelegate.m */; };
 		DA36F3701B61989E000E5ABA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA36F36F1B61989E000E5ABA /* ViewController.m */; };
@@ -35,6 +36,8 @@
 		225E395F984728373173BE85 /* Pods-TicTacToe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicTacToe.release.xcconfig"; path = "Pods/Target Support Files/Pods-TicTacToe/Pods-TicTacToe.release.xcconfig"; sourceTree = "<group>"; };
 		49E77097E6ED8962094DBB27 /* libPods-TicTacToe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TicTacToe.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		93EC42361B69725A00902D62 /* robot-thinking.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "robot-thinking.jpg"; sourceTree = "<group>"; };
+		93EC42381B6A0D2000902D62 /* TicTacToeCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TicTacToeCollectionViewCell.h; path = TicTacToe/TicTacToeCollectionViewCell.h; sourceTree = "<group>"; };
+		93EC42391B6A0D2000902D62 /* TicTacToeCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TicTacToeCollectionViewCell.m; path = TicTacToe/TicTacToeCollectionViewCell.m; sourceTree = "<group>"; };
 		AED7D66B4E9A0080B0A9FA64 /* Pods-TicTacToe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicTacToe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TicTacToe/Pods-TicTacToe.debug.xcconfig"; sourceTree = "<group>"; };
 		DA36F3641B61989E000E5ABA /* TicTacToe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TicTacToe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA36F3681B61989E000E5ABA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -96,6 +99,8 @@
 		DA36F35B1B61989E000E5ABA = {
 			isa = PBXGroup;
 			children = (
+				93EC42381B6A0D2000902D62 /* TicTacToeCollectionViewCell.h */,
+				93EC42391B6A0D2000902D62 /* TicTacToeCollectionViewCell.m */,
 				DA36F3661B61989E000E5ABA /* TicTacToe */,
 				DA36F3801B61989E000E5ABA /* TicTacToeTests */,
 				DA36F3651B61989E000E5ABA /* Products */,
@@ -297,6 +302,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93EC423A1B6A0D2000902D62 /* TicTacToeCollectionViewCell.m in Sources */,
 				DA36F38F1B6198BC000E5ABA /* GameBoard.m in Sources */,
 				DA36F3701B61989E000E5ABA /* ViewController.m in Sources */,
 				DA36F36D1B61989E000E5ABA /* AppDelegate.m in Sources */,

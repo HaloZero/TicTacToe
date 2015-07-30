@@ -9,9 +9,13 @@
 #import "ViewController.h"
 #import "GameState.h"
 #import "GameAIBasic.h"
+
+#import "TicTacToeCollectionViewCell.h"
+
 #import <SVProgressHUD.h>
 #import <UIAlertView+BlocksKit.h>
 
+static NSString *kGameCellIdentifier = @"TicTacToeCellIdentifier";
 @interface ViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (nonatomic, strong) GameState *game;
@@ -30,7 +34,7 @@
     // setup collection view
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
-    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+    [self.collectionView registerClass:[TicTacToeCollectionViewCell class] forCellWithReuseIdentifier:kGameCellIdentifier];
     self.collectionView.backgroundColor = [UIColor whiteColor];
     self.collectionView.scrollEnabled = NO;
 
@@ -73,33 +77,9 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-    for (UIView *view in cell.contentView.subviews) {
-        [view removeFromSuperview];
-    }
+    TicTacToeCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kGameCellIdentifier forIndexPath:indexPath];
 
-    UILabel *label = [[UILabel alloc] initWithFrame:cell.contentView.frame];
-
-    NSInteger row = indexPath.row;
-    NSInteger column = indexPath.section;
-
-    BoardOccupant occupant = [self.game.board occupantAtPositionRow:row col:column];
-    if (occupant == OccupiedByPlayerO) {
-        label.text = @"O";
-        label.textColor = [UIColor blueColor];
-    } else if (occupant == OccupiedByPlayerX) {
-        label.text = @"X";
-        label.textColor = [UIColor redColor];
-    } else {
-        label.text = @"";
-    }
-
-    [label setFont:[UIFont fontWithName:@"Chalkboard SE" size:90]];
-    [label setTextAlignment:NSTextAlignmentCenter];
-    [cell.contentView addSubview:label];
-    cell.layer.borderWidth = 1.0f;
-
-    cell.layer.borderColor = [[UIColor blackColor] CGColor];
+    [cell updateForGame:self.game atRow:indexPath.row andColumn:indexPath.section];
 
     return cell;
 }
@@ -109,42 +89,44 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger row = indexPath.row;
     NSInteger column = indexPath.section;
-    if (!self.game.gameEnded) {
-        if (self.game.currentPlayer != PlayerX) {
-            NSLog(@"Wait your turn");
-            return;
-        }
 
-        if ([self.game validMoveFor:PlayerX atRow:row column:column]) {
-            [self.game player:PlayerX playsAtRow:row column:column];
-
-            if (!self.game.gameEnded) {
-                [SVProgressHUD showImage:[UIImage imageNamed:@"robot-thinking.jpg"] status:@"Bot thinking"];
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                    __block GameMove *botMove = [self.botPlayer pickAMove];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        if (!self.game.gameEnded) {
-                            [self.game player:self.botPlayer.me playsAtRow:botMove.row column:botMove.column];
-                            [self checkGameOverWithMove:botMove];
-                        }
-                        [self.collectionView reloadData];
-                        [SVProgressHUD dismiss];
-                    });
-                });
-            } else {
-                [self checkGameOverWithMove:[[GameMove alloc] initWithRow:row andColumn:column]];
-            }
-
-            [self.collectionView reloadData];
-        } else {
-            NSLog(@"Can't play there");
-        }
-    } else {
+    if (self.game.gameEnded) {
         NSLog(@"Game is over");
+        return;
+    }
+
+    if (self.game.currentPlayer != PlayerX) {
+        [UIAlertView bk_showAlertViewWithTitle:@"Wait!" message:@"Wait your turn buddy" cancelButtonTitle:@"Got it" otherButtonTitles:nil handler:nil];
+        return;
+    }
+
+    if ([self.game validMoveFor:PlayerX atRow:row column:column]) {
+        [self.game player:PlayerX playsAtRow:row column:column];
+
+        if (!self.game.gameEnded) {
+            [SVProgressHUD showImage:[UIImage imageNamed:@"robot-thinking.jpg"] status:@"Bot thinking"];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                __block GameMove *botMove = [self.botPlayer pickAMove];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (!self.game.gameEnded) {
+                        [self.game player:self.botPlayer.me playsAtRow:botMove.row column:botMove.column];
+                        [self checkGameOver];
+                    }
+                    [self.collectionView reloadData];
+                    [SVProgressHUD dismiss];
+                });
+            });
+        } else {
+            [self checkGameOver];
+        }
+
+        [self.collectionView reloadData];
+    } else {
+        NSLog(@"Can't play there");
     }
 }
 
-- (void)checkGameOverWithMove:(GameMove *)move {
+- (void)checkGameOver {
     if (self.game.gameEnded) {
         if (self.game.result == GameResultWinnerX) {
             [UIAlertView bk_showAlertViewWithTitle:@"Game Over" message:@"Player X has Won" cancelButtonTitle:@"Got it" otherButtonTitles:nil handler:nil];
