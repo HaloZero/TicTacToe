@@ -36,8 +36,8 @@
 		225E395F984728373173BE85 /* Pods-TicTacToe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicTacToe.release.xcconfig"; path = "Pods/Target Support Files/Pods-TicTacToe/Pods-TicTacToe.release.xcconfig"; sourceTree = "<group>"; };
 		49E77097E6ED8962094DBB27 /* libPods-TicTacToe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TicTacToe.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		93EC42361B69725A00902D62 /* robot-thinking.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "robot-thinking.jpg"; sourceTree = "<group>"; };
-		93EC42381B6A0D2000902D62 /* TicTacToeCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TicTacToeCollectionViewCell.h; path = TicTacToe/TicTacToeCollectionViewCell.h; sourceTree = "<group>"; };
-		93EC42391B6A0D2000902D62 /* TicTacToeCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TicTacToeCollectionViewCell.m; path = TicTacToe/TicTacToeCollectionViewCell.m; sourceTree = "<group>"; };
+		93EC42381B6A0D2000902D62 /* TicTacToeCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TicTacToeCollectionViewCell.h; sourceTree = "<group>"; };
+		93EC42391B6A0D2000902D62 /* TicTacToeCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TicTacToeCollectionViewCell.m; sourceTree = "<group>"; };
 		AED7D66B4E9A0080B0A9FA64 /* Pods-TicTacToe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicTacToe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TicTacToe/Pods-TicTacToe.debug.xcconfig"; sourceTree = "<group>"; };
 		DA36F3641B61989E000E5ABA /* TicTacToe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TicTacToe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA36F3681B61989E000E5ABA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -96,11 +96,50 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		93EC42451B6A139800902D62 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				DA64313B1B61EA9F00F93A9E /* GameAIBasic.h */,
+				DA64313C1B61EA9F00F93A9E /* GameAIBasic.m */,
+				DA36F38D1B6198BC000E5ABA /* GameBoard.h */,
+				DA36F38E1B6198BC000E5ABA /* GameBoard.m */,
+				DA36F3901B61ABE3000E5ABA /* GameState.h */,
+				DA36F3911B61ABE3000E5ABA /* GameState.m */,
+			);
+			name = Game;
+			sourceTree = "<group>";
+		};
+		93EC42461B6A13A800902D62 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DA36F3761B61989E000E5ABA /* LaunchScreen.xib */,
+				DA36F3711B61989E000E5ABA /* Main.storyboard */,
+				93EC42381B6A0D2000902D62 /* TicTacToeCollectionViewCell.h */,
+				93EC42391B6A0D2000902D62 /* TicTacToeCollectionViewCell.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		93EC42471B6A13AF00902D62 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DA36F36E1B61989E000E5ABA /* ViewController.h */,
+				DA36F36F1B61989E000E5ABA /* ViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		93EC42481B6A13C700902D62 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				93EC42361B69725A00902D62 /* robot-thinking.jpg */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		DA36F35B1B61989E000E5ABA = {
 			isa = PBXGroup;
 			children = (
-				93EC42381B6A0D2000902D62 /* TicTacToeCollectionViewCell.h */,
-				93EC42391B6A0D2000902D62 /* TicTacToeCollectionViewCell.m */,
 				DA36F3661B61989E000E5ABA /* TicTacToe */,
 				DA36F3801B61989E000E5ABA /* TicTacToeTests */,
 				DA36F3651B61989E000E5ABA /* Products */,
@@ -121,21 +160,14 @@
 		DA36F3661B61989E000E5ABA /* TicTacToe */ = {
 			isa = PBXGroup;
 			children = (
-				93EC42361B69725A00902D62 /* robot-thinking.jpg */,
 				DA36F36B1B61989E000E5ABA /* AppDelegate.h */,
 				DA36F36C1B61989E000E5ABA /* AppDelegate.m */,
-				DA64313B1B61EA9F00F93A9E /* GameAIBasic.h */,
-				DA64313C1B61EA9F00F93A9E /* GameAIBasic.m */,
-				DA36F38D1B6198BC000E5ABA /* GameBoard.h */,
-				DA36F38E1B6198BC000E5ABA /* GameBoard.m */,
-				DA36F3901B61ABE3000E5ABA /* GameState.h */,
-				DA36F3911B61ABE3000E5ABA /* GameState.m */,
+				93EC42471B6A13AF00902D62 /* Controllers */,
+				93EC42451B6A139800902D62 /* Game */,
 				DA36F3741B61989E000E5ABA /* Images.xcassets */,
-				DA36F3761B61989E000E5ABA /* LaunchScreen.xib */,
-				DA36F3711B61989E000E5ABA /* Main.storyboard */,
+				93EC42481B6A13C700902D62 /* Resources */,
 				DA36F3671B61989E000E5ABA /* Supporting Files */,
-				DA36F36E1B61989E000E5ABA /* ViewController.h */,
-				DA36F36F1B61989E000E5ABA /* ViewController.m */,
+				93EC42461B6A13A800902D62 /* Views */,
 			);
 			path = TicTacToe;
 			sourceTree = "<group>";
