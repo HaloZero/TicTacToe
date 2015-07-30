@@ -15,7 +15,7 @@
 
 @property (nonatomic, strong) GameBoard *board;
 @property (nonatomic, assign) BOOL gameEnded;
-@property (nonatomic, assign) GameWinner winner;
+@property (nonatomic, assign) GameResult result;
 @property (nonatomic, assign) Player currentPlayer;
 
 @end
@@ -87,29 +87,29 @@
                 gameWon = YES;
             }
         }
+    }
 
-        for (int row = 2; row > 0; row--) {
-            if ([self.board occupantAtPositionRow:row col:self.board.size-row] != occupier) {
-                break;
-            }
-            if (row == 0) {
-                gameWon = YES;
-            }
+    for (int row = 0; row < self.board.size; row++) {
+        if ([self.board occupantAtPositionRow:self.board.size-1-row col:row] != occupier) {
+            break;
+        }
+        if (row == self.board.size-1) {
+            gameWon = YES;
         }
     }
 
     if (gameWon) {
         self.gameEnded = YES;
         if (player == PlayerX) {
-            self.winner = WonByPlayerX;
+            self.result = GameResultWinnerX;
         } else {
-            self.winner = WonByPlayerO;
+            self.result = GameResultWinnerO;
         }
     }
 
     if (!self.gameEnded && [self gameTied]) {
         self.gameEnded = YES;
-        self.winner = TieGame;
+        self.result = TieGame;
     }
 }
 
@@ -129,7 +129,7 @@
     GameState *game = [[GameState allocWithZone:zone] init];
     game.board = [self.board copy];
     game.gameEnded = self.gameEnded;
-    game.winner = self.winner;
+    game.result = self.result;
     game.currentPlayer = self.currentPlayer;
     return game;
 }

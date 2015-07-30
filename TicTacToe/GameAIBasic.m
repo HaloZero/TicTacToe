@@ -67,13 +67,13 @@
 }
 
 - (NSInteger)scoreForGame:(GameState *)state atDepth:(NSInteger)depth {
-    GameWinner myWinningState = WonByPlayerO;
+    GameResult myWinningState = GameResultWinnerO;
     if (self.me == PlayerX) {
-        myWinningState = WonByPlayerX;
+        myWinningState = GameResultWinnerX;
     }
-    if (state.winner == myWinningState) {
+    if (state.result == myWinningState) {
         return 10 - depth;
-    } else if (state.winner == TieGame) {
+    } else if (state.result == TieGame) {
         return 0;
     } else {
         return depth - 10;

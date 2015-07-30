@@ -10,6 +10,7 @@
 #import "GameState.h"
 #import "GameAIBasic.h"
 #import <SVProgressHUD.h>
+#import <UIAlertView+BlocksKit.h>
 
 @interface ViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -100,7 +101,6 @@
 
     cell.layer.borderColor = [[UIColor blackColor] CGColor];
 
-
     return cell;
 }
 
@@ -114,19 +114,27 @@
             NSLog(@"Wait your turn");
             return;
         }
+
         if ([self.game validMoveFor:PlayerX atRow:row column:column]) {
             [self.game player:PlayerX playsAtRow:row column:column];
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                __block GameMove *botMove = [self.botPlayer pickAMove];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if (!self.game.gameEnded) {
-                        [self.game player:self.botPlayer.me playsAtRow:botMove.row column:botMove.column];
-                    }
-                    [self.collectionView reloadData];
-                    [SVProgressHUD dismiss];
+
+            if (!self.game.gameEnded) {
+                [SVProgressHUD showImage:[UIImage imageNamed:@"robot-thinking.jpg"] status:@"Bot thinking"];
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    __block GameMove *botMove = [self.botPlayer pickAMove];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        if (!self.game.gameEnded) {
+                            [self.game player:self.botPlayer.me playsAtRow:botMove.row column:botMove.column];
+                            [self checkGameOverWithMove:botMove];
+                        }
+                        [self.collectionView reloadData];
+                        [SVProgressHUD dismiss];
+                    });
                 });
-            });
-            [SVProgressHUD showImage:[UIImage imageNamed:@"robot-thinking.jpg"] status:@"Bot thinking"];
+            } else {
+                [self checkGameOverWithMove:[[GameMove alloc] initWithRow:row andColumn:column]];
+            }
+
             [self.collectionView reloadData];
         } else {
             NSLog(@"Can't play there");
@@ -136,5 +144,15 @@
     }
 }
 
-
+- (void)checkGameOverWithMove:(GameMove *)move {
+    if (self.game.gameEnded) {
+        if (self.game.result == GameResultWinnerX) {
+            [UIAlertView bk_showAlertViewWithTitle:@"Game Over" message:@"Player X has Won" cancelButtonTitle:@"Got it" otherButtonTitles:nil handler:nil];
+        } else if (self.game.result == GameResultWinnerO) {
+            [UIAlertView bk_showAlertViewWithTitle:@"Game Over" message:@"Player O has Won" cancelButtonTitle:@"Got it" otherButtonTitles:nil handler:nil];
+        } else {
+            [UIAlertView bk_showAlertViewWithTitle:@"Game Over" message:@"Tie Game" cancelButtonTitle:@"Got it" otherButtonTitles:nil handler:nil];
+        }
+    }
+}
 @end
