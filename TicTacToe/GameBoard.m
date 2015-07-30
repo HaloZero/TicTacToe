@@ -22,11 +22,12 @@
     self = [super init];
     if (self) {
         _size = size;
-        NSMutableArray *rows = [NSMutableArray arrayWithCapacity:size * size];
 
+        NSMutableArray *rows = [NSMutableArray arrayWithCapacity:size * size];
         for (int i = 0; i < size *size; i++)  {
             [rows addObject:@(Empty)];
         }
+
         _rows = rows;
     }
     return self;
@@ -50,47 +51,9 @@
     return [NSString stringWithFormat:@"%@ Board is %@", [super description], self.rows];
 }
 
-- (NSArray *)iterations {
-    NSMutableArray *iterations = [NSMutableArray array];
-    // check all horizontal
-    for (int row = 0; row < self.size; row++) {
-        NSMutableArray *iteration = [NSMutableArray array];
-        for (int column = 0; column < self.size; column++) {
-            [iteration addObject:[[GameMove alloc] initWithRow:row andColumn:column]];
-        }
-
-        [iterations addObject:[iteration copy]];
-    }
-
-    // check all verical lines
-    for (int column = 0; column < self.size; column++) {
-        NSMutableArray *iteration = [NSMutableArray array];
-        for (int row = 0; row < self.size; row++) {
-            [iteration addObject:[[GameMove alloc] initWithRow:row andColumn:column]];
-        }
-
-        [iterations addObject:[iteration copy]];
-    }
-
-    // diagonal
-    NSMutableArray *iteration = [NSMutableArray array];
-    for (int row = 0; row < self.size; row++) {
-        [iteration addObject:[[GameMove alloc] initWithRow:row andColumn:row]];
-    }
-    [iterations addObject:[iteration copy]];
-
-    iteration = [NSMutableArray array];
-    for (int row = 0; row < self.size; row++) {
-        NSInteger column = self.size-row-1;
-        [iteration addObject:[[GameMove alloc] initWithRow:row andColumn:column]];
-    }
-    [iterations addObject:[iteration copy]];
-
-    return [iterations copy];
-}
-
 - (NSArray *)availableMoves {
     NSMutableArray *moves = [NSMutableArray array];
+
     for (int row = 0; row < self.size; row++) {
         for (int column = 0; column < self.size; column++) {
             if ([self occupantAtPositionRow:row col:column] == Empty) {
@@ -98,6 +61,7 @@
             }
         }
     }
+
     return [moves copy];
 }
 

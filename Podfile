@@ -3,4 +3,5 @@
 
 target 'TicTacToe' do
 	pod 'BlocksKit'
+  pod 'SVProgressHUD'
 end

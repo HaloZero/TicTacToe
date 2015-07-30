@@ -9,10 +9,11 @@
 #import "ViewController.h"
 #import "GameState.h"
 #import "GameAIBasic.h"
+#import <SVProgressHUD.h>
 
 @interface ViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
-@property (nonatomic, strong) GameState *state;
+@property (nonatomic, strong) GameState *game;
 @property (nonatomic, strong) GameAIBasic *botPlayer;
 
 @end
@@ -22,15 +23,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.state = [GameState new];
-    self.botPlayer = [[GameAIBasic alloc] initWithGameState:self.state playingAs:PlayerO];
+    self.game = [GameState new];
+    self.botPlayer = [[GameAIBasic alloc] initWithGameState:self.game playingAs:PlayerO];
+
+    // setup collection view
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
     self.collectionView.backgroundColor = [UIColor whiteColor];
     self.collectionView.scrollEnabled = NO;
 
-    CGFloat width = floor(self.view.frame.size.width / self.state.board.size);
+    // setup layout
+    CGFloat width = floor(self.view.frame.size.width / self.game.board.size);
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.itemSize = CGSizeMake(width, width);
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
@@ -38,31 +42,32 @@
     layout.minimumLineSpacing = 0;
     layout.minimumInteritemSpacing = 0;
     self.collectionView.collectionViewLayout = layout;
+
+
+    // resize collection view
     CGFloat x = ceil(([UIScreen mainScreen].bounds.size.width - (width * 3)) / 2);
     CGFloat y = self.collectionView.frame.origin.y;
-    [self.collectionView setFrame:CGRectMake(x, y, width * self.state.board.size, width * self.state.board.size)];
+    [self.collectionView setFrame:CGRectMake(x, y, width * self.game.board.size, width * self.game.board.size)];
 
     [self.createNewGameButton addTarget:self action:@selector(startNewGame) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)startNewGame {
-    self.state = [GameState new];
-    self.botPlayer = [[GameAIBasic alloc] initWithGameState:self.state playingAs:PlayerO];
+    self.game = [GameState new];
+    self.botPlayer = [[GameAIBasic alloc] initWithGameState:self.game playingAs:PlayerO];
     [self.collectionView reloadData];
 }
-
-#pragma mark - UICollectionView Delegate
 
 #pragma mark - UICollectionView DataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return self.state.board.size;
+    return self.game.board.size;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.state.board.size;
+    return self.game.board.size;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -77,7 +82,7 @@
     NSInteger row = indexPath.row;
     NSInteger column = indexPath.section;
 
-    BoardOccupant occupant = [self.state.board occupantAtPositionRow:row col:column];
+    BoardOccupant occupant = [self.game.board occupantAtPositionRow:row col:column];
     if (occupant == OccupiedByPlayerO) {
         label.text = @"O";
         label.textColor = [UIColor blueColor];
@@ -99,21 +104,29 @@
     return cell;
 }
 
+#pragma mark - UICollectionView Delegate
+
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger row = indexPath.row;
     NSInteger column = indexPath.section;
-    if (!self.state.gameEnded) {
-        if ([self.state validMoveFor:PlayerX atRow:row column:column]) {
-            [self.state player:PlayerX playsAtRow:row column:column];
+    if (!self.game.gameEnded) {
+        if (self.game.currentPlayer != PlayerX) {
+            NSLog(@"Wait your turn");
+            return;
+        }
+        if ([self.game validMoveFor:PlayerX atRow:row column:column]) {
+            [self.game player:PlayerX playsAtRow:row column:column];
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 __block GameMove *botMove = [self.botPlayer pickAMove];
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    if (!self.state.gameEnded) {
-                        [self.state player:self.botPlayer.me playsAtRow:botMove.row column:botMove.column];
+                    if (!self.game.gameEnded) {
+                        [self.game player:self.botPlayer.me playsAtRow:botMove.row column:botMove.column];
                     }
                     [self.collectionView reloadData];
+                    [SVProgressHUD dismiss];
                 });
             });
+            [SVProgressHUD showImage:[UIImage imageNamed:@"robot-thinking.jpg"] status:@"Bot thinking"];
             [self.collectionView reloadData];
         } else {
             NSLog(@"Can't play there");

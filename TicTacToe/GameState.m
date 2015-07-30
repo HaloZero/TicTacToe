@@ -49,24 +49,61 @@
     }
     [self.board occupyPositionRow:row column:column withOccupant:occupant];
 
+    GameMove *move = [[GameMove alloc] initWithRow:row andColumn:column];
+    [self checkGameOverWithMove:move withPlayer:player];
     self.currentPlayer = opponent(self.currentPlayer);
-    [self checkGameOver];
 }
 
-- (void)checkGameOver {
-    for (NSArray *iteration in [self.board iterations]) {
-        GameMove *position = iteration[0];
-        BoardOccupant firstOccupant = [self.board occupantAtPositionRow:position.row col:position.column];
-        self.gameEnded = [iteration bk_all:^BOOL(GameMove *position) {
-            return [self.board occupantAtPositionRow:position.row col:position.column] == firstOccupant && firstOccupant != Empty;
-        }];
-        if (self.gameEnded) {
-            if (firstOccupant == OccupiedByPlayerX) {
-                self.winner = WonByPlayerX;
-            } else {
-                self.winner = WonByPlayerO;
-            }
+- (void)checkGameOverWithMove:(GameMove *)move withPlayer:(Player)player {
+    BoardOccupant occupier = OccupiedByPlayerX;
+    if (player == PlayerO) {
+        occupier = OccupiedByPlayerO;
+    }
+
+    BOOL gameWon = NO;
+    for (int row = 0; row < self.board.size; row++) {
+        if ([self.board occupantAtPositionRow:row col:move.column] != occupier) {
+            break;;
+        }
+        if (row == self.board.size-1) {
+            gameWon = YES;
+        }
+    }
+    for (int col = 0; col < self.board.size; col++) {
+        if ([self.board occupantAtPositionRow:move.row col:col] != occupier) {
             break;
+        }
+        if (col == self.board.size-1) {
+            gameWon = YES;
+        }
+    }
+
+    if (move.row == move.column) {
+        for (int row = 0; row < self.board.size; row++) {
+            if ([self.board occupantAtPositionRow:row col:row] != occupier) {
+                break;
+            }
+            if (row == self.board.size-1) {
+                gameWon = YES;
+            }
+        }
+
+        for (int row = 2; row > 0; row--) {
+            if ([self.board occupantAtPositionRow:row col:self.board.size-row] != occupier) {
+                break;
+            }
+            if (row == 0) {
+                gameWon = YES;
+            }
+        }
+    }
+
+    if (gameWon) {
+        self.gameEnded = YES;
+        if (player == PlayerX) {
+            self.winner = WonByPlayerX;
+        } else {
+            self.winner = WonByPlayerO;
         }
     }
 
