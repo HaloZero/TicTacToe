@@ -8,8 +8,7 @@
 
 #import "GameBoard.h"
 
-
-@interface GameBoard()
+@interface GameBoard ()
 
 @property (nonatomic, strong) NSMutableArray *rows;
 @property (nonatomic, assign) NSInteger size;
@@ -24,7 +23,7 @@
         _size = size;
 
         NSMutableArray *rows = [NSMutableArray arrayWithCapacity:size * size];
-        for (int i = 0; i < size *size; i++)  {
+        for (int i = 0; i < size * size; i++) {
             [rows addObject:@(Empty)];
         }
 

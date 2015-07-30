@@ -34,7 +34,8 @@ static NSString *kGameCellIdentifier = @"TicTacToeCellIdentifier";
     // setup collection view
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
-    [self.collectionView registerClass:[TicTacToeCollectionViewCell class] forCellWithReuseIdentifier:kGameCellIdentifier];
+    [self.collectionView registerClass:[TicTacToeCollectionViewCell class]
+            forCellWithReuseIdentifier:kGameCellIdentifier];
     self.collectionView.backgroundColor = [UIColor whiteColor];
     self.collectionView.scrollEnabled = NO;
 
@@ -48,13 +49,14 @@ static NSString *kGameCellIdentifier = @"TicTacToeCellIdentifier";
     layout.minimumInteritemSpacing = 0;
     self.collectionView.collectionViewLayout = layout;
 
-
     // resize collection view
     CGFloat x = ceil(([UIScreen mainScreen].bounds.size.width - (width * 3)) / 2);
     CGFloat y = self.collectionView.frame.origin.y;
     [self.collectionView setFrame:CGRectMake(x, y, width * self.game.board.size, width * self.game.board.size)];
 
-    [self.createNewGameButton addTarget:self action:@selector(startNewGame) forControlEvents:UIControlEventTouchUpInside];
+    [self.createNewGameButton addTarget:self
+                                 action:@selector(startNewGame)
+                       forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)startNewGame {
@@ -65,19 +67,18 @@ static NSString *kGameCellIdentifier = @"TicTacToeCellIdentifier";
 
 #pragma mark - UICollectionView DataSource
 
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return self.game.board.size;
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.game.board.size;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    TicTacToeCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kGameCellIdentifier forIndexPath:indexPath];
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    TicTacToeCollectionViewCell *cell =
+        [collectionView dequeueReusableCellWithReuseIdentifier:kGameCellIdentifier forIndexPath:indexPath];
 
     [cell updateForGame:self.game atRow:indexPath.row andColumn:indexPath.section];
 
@@ -96,7 +97,11 @@ static NSString *kGameCellIdentifier = @"TicTacToeCellIdentifier";
     }
 
     if (self.game.currentPlayer != PlayerX) {
-        [UIAlertView bk_showAlertViewWithTitle:@"Wait!" message:@"Wait your turn buddy" cancelButtonTitle:@"Got it" otherButtonTitles:nil handler:nil];
+        [UIAlertView bk_showAlertViewWithTitle:@"Wait!"
+                                       message:@"Wait your turn buddy"
+                             cancelButtonTitle:@"Got it"
+                             otherButtonTitles:nil
+                                       handler:nil];
         return;
     }
 
@@ -129,11 +134,23 @@ static NSString *kGameCellIdentifier = @"TicTacToeCellIdentifier";
 - (void)checkGameOver {
     if (self.game.gameEnded) {
         if (self.game.result == GameResultWinnerX) {
-            [UIAlertView bk_showAlertViewWithTitle:@"Game Over" message:@"Player X has Won" cancelButtonTitle:@"Got it" otherButtonTitles:nil handler:nil];
+            [UIAlertView bk_showAlertViewWithTitle:@"Game Over"
+                                           message:@"Player X has Won"
+                                 cancelButtonTitle:@"Got it"
+                                 otherButtonTitles:nil
+                                           handler:nil];
         } else if (self.game.result == GameResultWinnerO) {
-            [UIAlertView bk_showAlertViewWithTitle:@"Game Over" message:@"Player O has Won" cancelButtonTitle:@"Got it" otherButtonTitles:nil handler:nil];
+            [UIAlertView bk_showAlertViewWithTitle:@"Game Over"
+                                           message:@"Player O has Won"
+                                 cancelButtonTitle:@"Got it"
+                                 otherButtonTitles:nil
+                                           handler:nil];
         } else {
-            [UIAlertView bk_showAlertViewWithTitle:@"Game Over" message:@"Tie Game" cancelButtonTitle:@"Got it" otherButtonTitles:nil handler:nil];
+            [UIAlertView bk_showAlertViewWithTitle:@"Game Over"
+                                           message:@"Tie Game"
+                                 cancelButtonTitle:@"Got it"
+                                 otherButtonTitles:nil
+                                           handler:nil];
         }
     }
 }

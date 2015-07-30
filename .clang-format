@@ -1,0 +1,8 @@
+BasedOnStyle: LLVM
+IndentWidth: 4
+ObjCBlockIndentWidth: 4
+ColumnLimit: 120
+UseTab: Never
+ObjCSpaceAfterProperty: true
+SpacesInContainerLiterals: false
+AllowShortFunctionsOnASingleLine: Inline

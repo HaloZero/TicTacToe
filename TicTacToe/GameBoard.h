@@ -9,11 +9,7 @@
 #import <Foundation/Foundation.h>
 
 // This could be named better, :(
-typedef NS_ENUM(NSInteger, BoardOccupant) {
-    Empty,
-    OccupiedByPlayerX,
-    OccupiedByPlayerO
-};
+typedef NS_ENUM(NSInteger, BoardOccupant) { Empty, OccupiedByPlayerX, OccupiedByPlayerO };
 
 @interface GameBoard : NSObject
 

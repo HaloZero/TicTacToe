@@ -12,7 +12,7 @@
 @implementation TicTacToeCollectionViewCell
 
 - (void)updateForGame:(GameState *)game atRow:(NSInteger)row andColumn:(NSInteger)column {
-    if(!self.label) {
+    if (!self.label) {
         UILabel *label = [[UILabel alloc] initWithFrame:self.contentView.frame];
 
         [label setFont:[UIFont fontWithName:@"Chalkboard SE" size:90]];

@@ -10,8 +10,7 @@
 #import "GameBoard.h"
 #import <BlocksKit.h>
 
-
-@interface GameState()
+@interface GameState ()
 
 @property (nonatomic, strong) GameBoard *board;
 @property (nonatomic, assign) BOOL gameEnded;
@@ -51,7 +50,7 @@
 
     GameMove *move = [[GameMove alloc] initWithRow:row andColumn:column];
     [self checkGameOverWithMove:move withPlayer:player];
-    self.currentPlayer = opponent(self.currentPlayer);
+    self.currentPlayer = self.currentPlayer == PlayerX ? PlayerO : PlayerX;
 }
 
 - (void)checkGameOverWithMove:(GameMove *)move withPlayer:(Player)player {
@@ -63,9 +62,10 @@
     BOOL gameWon = NO;
     for (int row = 0; row < self.board.size; row++) {
         if ([self.board occupantAtPositionRow:row col:move.column] != occupier) {
-            break;;
+            break;
+            ;
         }
-        if (row == self.board.size-1) {
+        if (row == self.board.size - 1) {
             gameWon = YES;
         }
     }
@@ -73,7 +73,7 @@
         if ([self.board occupantAtPositionRow:move.row col:col] != occupier) {
             break;
         }
-        if (col == self.board.size-1) {
+        if (col == self.board.size - 1) {
             gameWon = YES;
         }
     }
@@ -83,17 +83,17 @@
             if ([self.board occupantAtPositionRow:row col:row] != occupier) {
                 break;
             }
-            if (row == self.board.size-1) {
+            if (row == self.board.size - 1) {
                 gameWon = YES;
             }
         }
     }
 
     for (int row = 0; row < self.board.size; row++) {
-        if ([self.board occupantAtPositionRow:self.board.size-1-row col:row] != occupier) {
+        if ([self.board occupantAtPositionRow:self.board.size - 1 - row col:row] != occupier) {
             break;
         }
-        if (row == self.board.size-1) {
+        if (row == self.board.size - 1) {
             gameWon = YES;
         }
     }

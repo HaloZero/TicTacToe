@@ -14,7 +14,6 @@
 @property (nonatomic, assign) GameState *game;
 @property (nonatomic, assign) Player me;
 @property (nonatomic, assign) Player myOpponent;
-
 @property (nonatomic, strong) GameMove *choice;
 
 @end
@@ -26,7 +25,7 @@
     if (self) {
         _game = game;
         _me = player;
-        _myOpponent = opponent(player);
+        _myOpponent = _me == PlayerX ? PlayerO : PlayerX;
     }
     return self;
 }
@@ -84,7 +83,7 @@
     NSInteger sizeofBoard = self.game.board.size;
     for (int row = 0; row < sizeofBoard; row++) {
         for (int column = 0; column < sizeofBoard; column++) {
-            if([self.game validMoveFor:self.me atRow:row column:column]) {
+            if ([self.game validMoveFor:self.me atRow:row column:column]) {
                 [self.game player:self.me playsAtRow:row column:column];
                 return;
             }

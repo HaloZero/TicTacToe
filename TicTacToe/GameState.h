@@ -9,24 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "GameBoard.h"
 
-typedef NS_ENUM(NSInteger, Player) {
-    PlayerX,
-    PlayerO
-};
+typedef NS_ENUM(NSInteger, Player) { PlayerX, PlayerO };
 
-typedef NS_ENUM(NSInteger, GameResult) {
-    TieGame,
-    GameResultWinnerX,
-    GameResultWinnerO
-};
-
-static Player opponent(Player player) {
-    if (player == PlayerO) {
-        return PlayerX;
-    } else {
-        return PlayerO;
-    }
-}
+typedef NS_ENUM(NSInteger, GameResult) { TieGame, GameResultWinnerX, GameResultWinnerO };
 
 @interface GameState : NSObject
 
